@@ -19,4 +19,6 @@ console.log('Message posted to worker');
 	};
 
 
-} // end of if worker
+} else {
+	console.log("No Worker Available");
+}
