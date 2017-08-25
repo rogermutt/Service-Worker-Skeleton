@@ -2,6 +2,7 @@
 var first = document.querySelector("#first");
 var result = document.querySelector("#result");
 
+console.log("Welcome");
 // check if worker compatibility 
 if (window.Worker) {
 console.log("Worker Ready");
