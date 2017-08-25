@@ -9,7 +9,7 @@ console.log("Worker Ready");
 var newWorker = new Worker("worker.js");
 
 	first.onclick = function(el) {
-newWorker.postMessage(el.target.innerHTML);
+newWorker.postMessage(this.innerHTML);
 console.log('Message posted to worker');
 console.log(el);
 	};
