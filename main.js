@@ -8,10 +8,10 @@ console.log("Worker Ready");
 // confirm JS file on Github
 var newWorker = new Worker("worker.js");
 
-	first.onclick = function(el) {
+	first.onclick = function() {
 newWorker.postMessage(this.innerHTML);
 console.log('Message posted to worker');
-console.log(el);
+console.log(this.innerHTML);
 	};
 
 	newWorker.onmessage = function(e) {
