@@ -7,7 +7,7 @@ var input = document.querySelector("#input"),
 var newWorker = new Worker("worker.js");
 
 	button.onclick = function() { 
-  if (input.value) {
+  if (isNan(input.value)) {
   newWorker.postMessage(input.value);
 	console.log('Message posted to worker');
   }   
