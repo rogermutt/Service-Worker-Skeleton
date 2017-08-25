@@ -15,7 +15,8 @@ console.log(this.innerHTML);
 	};
 
 	newWorker.onmessage = function(e) {
-  result.innerHTML=e.target.innerHTML
+		console.log(e);
+  result.innerHTML=e;
 	console.log('Message received from worker');
 	};
 
