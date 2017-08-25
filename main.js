@@ -2,7 +2,6 @@
 var first = document.querySelector("#first");
 var result = document.querySelector("#result");
 
-console.log("Welcome");
 // check if worker compatibility 
 if (window.Worker) {
 console.log("Worker Ready");
@@ -12,6 +11,7 @@ var newWorker = new Worker("worker.js");
 	first.onclick = function(el) {
 newWorker.postMessage(el.target.innerHTML);
 console.log('Message posted to worker');
+console.log(el);
 	};
 
 	newWorker.onmessage = function(e) {
