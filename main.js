@@ -16,7 +16,7 @@ console.log(this.innerHTML);
 
 	newWorker.onmessage = function(e) {
 		console.log(e);
-  result.innerHTML=e;
+  result.innerHTML=e.data;
 	console.log('Message received from worker');
 	};
 
