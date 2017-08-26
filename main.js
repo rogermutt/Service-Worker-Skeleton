@@ -10,6 +10,7 @@ var newWorker = new Worker("worker.js");
   if (!isNaN(input.value)) {
   newWorker.postMessage(input.value);
 	console.log('Message posted to worker');
+	console.log('content' + input.value);
   } else {	alert("Digits only"); }
 	
 	};
