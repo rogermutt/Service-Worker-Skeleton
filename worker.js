@@ -5,8 +5,9 @@ onmessage = function(e) {
  	var date = new Date (),
 	 	currently = 1900 + date.getYear(),
   	  	workerResult = "You were born in "+ currently - e.data;
-
-console.log(workerResult);
+console.log("e.data "+e.data);
+console.log("currently "+currently);
+console.log("workerResult "+workerResult);
   console.log("Message sent back");	
 
   postMessage(workerResult);
