@@ -22,11 +22,15 @@ var newWorker = new Worker("worker.js");
 
 var myImage = document.querySelector('img');
 
-fetch('image.jpg').then(function(response) {
+fetch('euripidies-image.jpg').then(function(response) {
   return response.blob();
 }).then(function(myBlob) {
   var objectURL = URL.createObjectURL(myBlob);
   myImage.src = objectURL;
+
+    yourImg.style.height = '100px';
+    yourImg.style.width = '200px';
+  
 });
 
 
