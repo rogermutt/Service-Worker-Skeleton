@@ -20,6 +20,14 @@ var newWorker = new Worker("worker.js");
 	console.log('Message received from worker');
 	};
 
+var myImage = document.querySelector('img');
+
+fetch('image.jpg').then(function(response) {
+  return response.blob();
+}).then(function(myBlob) {
+  var objectURL = URL.createObjectURL(myBlob);
+  myImage.src = objectURL;
+});
 
 
 
