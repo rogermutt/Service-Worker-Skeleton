@@ -1,29 +1,13 @@
-#result {
-	font-family: sans-serif;
-	font-size: 35px;
-}
 
-* {
-    box-sizing: border-box;
-}
+@import url(https://fonts.googleapis.com/css?family=Lato);
 
 body {
     margin: 0;
-    font-family: Arial;
-    font-size: 17px;
+    font-family: Lato;
 }
 
 .video-container {
   position: relative;
-}
-
-.overlay-desc {
-  background: rgba(0,0,0,0);
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 #backgroundVid {
@@ -34,10 +18,16 @@ body {
 
 .content {
     position: fixed;
-    bottom: 0;
+    //bottom: 0;
     color: #f1f1f1;
     width: 100%;
-    padding: 20px;
+    padding: 2.5%;
+}
+
+#footer {
+	position: fixed;
+	font-size: 12px;
+	bottom: 15px;
 }
 
 
