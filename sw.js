@@ -2,12 +2,11 @@ var CACHE_NAME = 'cache-v1';
 var urlsToCache = [
   '/',
   '/styles.css',
-  'main.js',
-  'video/Underground-Traffic.mp4'
+  'main.js'
 ];
 
 self.addEventListener('install', (event)=> {
-  // Perform install steps
+  console.log('installing SW');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
