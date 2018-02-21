@@ -6,7 +6,7 @@ var urlsToCache = [
   'video/Underground-Traffic.mp4'
 ];
 
-self.addEventListener('install', function(event) {
+self.addEventListener('install', (event)=> {
   // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -17,11 +17,11 @@ self.addEventListener('install', function(event) {
   );
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', (event)=> {
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
-        // Cache hit - return response
+        console.log('SW is fetching the asset ' + response);
         if (response) {
           return response;
         }
