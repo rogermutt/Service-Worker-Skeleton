@@ -1,32 +1,41 @@
-var CACHE_NAME = 'cache-v1';
+var CACHE_NAME = 'v1::madebymike';
 var urlsToCache = [
   '/',
   '/styles.css',
   'main.js'
 ];
 
-self.addEventListener('install', (event)=> {
-  console.log('installing SW');
+self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function(cache) {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(function(cache) {
+      return cache.addAll(urlsToCache);
+    })
   );
 });
 
-self.addEventListener('fetch', (event)=> {
-  console.log("Fetching");
-  event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        console.log('SW is fetching the asset ' + response);
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
+
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function(cacheName) {
+          return cacheName !== CACHE_NAME;
+        }).map(function(cacheName) {
+          console.log('Deleting '+ cacheName);
+          return caches.delete(cacheName);
+        })
+      );
+    })
+  );
+});
+
+self.addEventListener('fetch', function(event) {
+  e.respondWith(
+    // If network fetch fails serve offline page form cache
+    fetch(event.request).catch(function(error) {
+      return caches.open(CACHE_NAME).then(function(cache) {
+        return cache.match('/offline.html');
+      });
+    })
   );
 });
