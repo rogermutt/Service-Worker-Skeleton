@@ -6,6 +6,7 @@ var urlsToCache = [
 ];
 
 self.addEventListener('install', function(event) {
+  console.log("installing SW");
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
       return cache.addAll(urlsToCache);
@@ -15,6 +16,7 @@ self.addEventListener('install', function(event) {
 
 
 self.addEventListener('activate', function(event) {
+  console.log("Activating SW");
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
       return Promise.all(
@@ -30,6 +32,7 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
+  console.log("Fetching SW");
   e.respondWith(
     // If network fetch fails serve offline page form cache
     fetch(event.request).catch(function(error) {
