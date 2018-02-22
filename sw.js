@@ -1,93 +1,56 @@
+var CACHE_NAME = 'segment-cache-v1';
 
-var version = 'v1::';
+function shouldCache(url) {
+  return url.endsWith('.mp4') || url.endsWith('.m4s');
+}
 
-self.addEventListener("install", function(event) {
-  console.log('WORKER: install event in progress.');
-  event.waitUntil(
-    caches.open(version + 'fundamentals')
-      .then(function(cache) {
-        return cache.addAll([
-          '/',
-          '/styles.css',
-          '/video/Underground-Traffic.mp4',
-          '/main.js'
-        ]);
-      })
-      .then(function() {
-        console.log('WORKER: install completed');
-      })
-  );
-});
+function loadFromCacheOrFetch(request) {
+  return caches.open(CACHE_NAME).then(function(cache) {
+    return cache.match(request).then(function(response) {
+      if (response) {
+        // The custom header was added before putting it in the cache.
+        console.log('Handling cached request', request.url);
+        return response;
+      }
 
-self.addEventListener("fetch", function(event) {
-  console.log('WORKER: fetch event in progress.');
-
-  if (event.request.method !== 'GET') {
-    console.log('WORKER: fetch event ignored.', event.request.method, event.request.url);
-    return;
-  }
-
-  event.respondWith(
-    caches.match(event.request)
-      .then(function(cached) {
-
-        var networked = fetch(event.request)
-          .then(fetchedFromNetwork, unableToResolve)
-          .catch(unableToResolve);
-
-        console.log('WORKER: fetch event', cached ? '(cached)' : '(network)', event.request.url);
-        return cached || networked;
-
-        function fetchedFromNetwork(response) {
-          var cacheCopy = response.clone();
-
-          console.log('WORKER: fetch response from network.', event.request.url);
-
-          caches.open(version + 'pages')
-            .then(function add(cache) {
-              cache.put(event.request, cacheCopy);
-            })
-            .then(function() {
-              console.log('WORKER: fetch response stored in cache.', event.request.url);
-            });
-
-          return response;
+      // Request not cached, make a real request for the file.
+      return fetch(request).then(function(response) {
+        // Cache any successfully request for an MP4 segment.  Service
+        // workers cannot cache 206 (Partial Content).  This means that
+        // content that uses range requests (e.g. SegmentBase) will require
+        // more work.
+        if (response.ok && response.status != 206 && shouldCache(request.url)) {
+          console.log('Caching MP4 segment', request.url);
+          cacheResponse(cache, request, response);
         }
 
-        function unableToResolve () {
+        return response;
+      });
+    });
+  })
+}
 
-          console.log('WORKER: fetch request failed in both cache and network.');
+function cacheResponse(cache, request, response) {
+  // Response objects are read-only, so to add our custom header, we need to
+  // recreate the object.
+  var init = {
+    status: response.status,
+    statusText: response.statusText,
+    headers: {'X-Shaka-From-Cache': true}
+  };
 
-          return new Response('<h1>Service Unavailable</h1>', {
-            status: 503,
-            statusText: 'Service Unavailable',
-            headers: new Headers({
-              'Content-Type': 'text/html'
-            })
-          });
-        }
-      })
-  );
-});
+  response.headers.forEach(function(value, key) {
+    init.headers[key] = value;
+  });
 
-self.addEventListener("activate", function(event) {
+  // Response objects are single use.  This means we need to call clone() so
+  // we can both store the ArrayBuffer and give the response to the page.
+  return response.clone().arrayBuffer().then(function(ab) {
+    cache.put(request, new Response(ab, init));
+  });
+}
 
-  console.log('WORKER: activate event in progress.');
 
-  event.waitUntil(
-    caches.keys()
-      .then(function (keys) {
-        return Promise.all(
-          keys.filter(function (key) {
-              return !key.startsWith(version);
-            })
-            .map(function (key) {
-              return caches.delete(key);
-            })
-        );
-      })
-      .then(function() {
-        console.log('WORKER: activate completed.');
-      })
-  );
+self.addEventListener('fetch', function(event) {
+  event.respondWith(loadFromCacheOrFetch(event.request));
 });
