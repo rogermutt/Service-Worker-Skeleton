@@ -7,7 +7,7 @@ var CACHE_FILES = [
     '/',
     'index.html',
     'style.css',
-    'http:\//bit.ly\/1Qa4JI3',
+    'jeans.jpg',
     'main.js'
 ];
 
