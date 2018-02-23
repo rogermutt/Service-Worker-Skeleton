@@ -31,7 +31,7 @@ self.addEventListener('fetch', function (event) {
             requestBackend(event);
         })
     )
-}).then(image=>console.log(image));
+});
 
 const requestBackend =(event)=>{
     var url = event.request.clone();
