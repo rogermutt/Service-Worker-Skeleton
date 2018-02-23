@@ -1,38 +1,29 @@
 
-var CACHE_VERSION = 'app-v1';
-var CACHE_FILES = [
-    '/',
-    'index.html',
-    'style.css',
-    'jeans.jpg',
-    'main.js'
-];
+let CACHE_VERSION = 'app-v1';
+
+let CACHE_FILES = {
+    main: '/',
+    index: 'index.html',
+    style: 'style.css',
+    image: 'jeans.jpg',
+    js: 'main.js'
+};
+
+let cacheList = Object.keys(CACHE_FILES).map(key=>CACHE_FILES[key]);
 
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(CACHE_VERSION)
             .then(function (cache) {
                 console.log('Opened cache');
-                return cache.addAll(CACHE_FILES);
+                return cache.addAll(cacheList);
             })
     );
 });
 
-self.addEventListener('activate', function (event) {
-    event.waitUntil(
-        caches.keys().then(function(keys){
-            return Promise.all(keys.map(function(key, i){
-                if(key !== CACHE_VERSION){
-                    return caches.delete(keys[i]);
-                }
-            }))
-        })
-    )
-});
-
 self.addEventListener('fetch', function (event) {
     event.respondWith(
-        caches.match(event.request).then(function(res){
+        caches.open(CACHE_FILES.image).then(function(res){
             if(res){
               console.log(res);
                 return res;
@@ -40,9 +31,9 @@ self.addEventListener('fetch', function (event) {
             requestBackend(event);
         })
     )
-});
+}).then(image=>console.log(image));
 
-function requestBackend(event){
+const requestBackend =(event)=>{
     var url = event.request.clone();
     return fetch(url).then(function(res){
         //if not a valid response send the error
@@ -59,3 +50,15 @@ function requestBackend(event){
         return res;
     })
 }
+
+self.addEventListener('activate', function (event) {
+    event.waitUntil(
+        caches.keys().then(function(keys){
+            return Promise.all(keys.map(function(key, i){
+                if(key !== CACHE_VERSION){
+                    return caches.delete(keys[i]);
+                }
+            }))
+        })
+    )
+});
