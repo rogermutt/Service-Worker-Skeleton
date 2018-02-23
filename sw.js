@@ -1,11 +1,13 @@
 
-// importScripts('js/cache-polyfill.js');
+importScripts('js/cache-polyfill.js');
+
 
 var CACHE_VERSION = 'app-v1';
 var CACHE_FILES = [
     '/',
     'index.html',
     'style.css',
+    'http:\//bit.ly\/1Qa4JI3',
     'main.js'
 ];
 
@@ -35,6 +37,7 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request).then(function(res){
             if(res){
+              console.log(res);
                 return res;
             }
             requestBackend(event);
