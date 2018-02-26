@@ -10,8 +10,8 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-let one = querySelector(".one");
-let two = querySelector(".two");
+let one = document.querySelector(".one");
+let two = document.querySelector(".two");
 
 one.src = "one.jpeg";
 two.src = "two.jpeg";
