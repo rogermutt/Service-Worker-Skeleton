@@ -23,7 +23,7 @@ self.addEventListener('install', function (event) {
 
 self.addEventListener('fetch', function (event) {
     event.respondWith(
-        caches.open(CACHE_FILES.image).then(function(res){
+        caches.open(CACHE_FILES["image"]).then(function(res){
             if(res){
               console.log(res);
                 return res;
