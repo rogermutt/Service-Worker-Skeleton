@@ -10,8 +10,8 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-let one = document.querySelector(".one");
-let two = document.querySelector(".two");
+let one = document.getElementById("one");
+let two = document.getElementById("two");
 
 one.src = "one.jpeg";
 two.src = "two.jpeg";
