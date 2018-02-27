@@ -1,6 +1,5 @@
 var CACHE_NAME = 'dependencies-cache';
 
-// Files required to make this app work offline
 var REQUIRED_FILES = [
   'one.jpeg',
   'two.jpeg'
@@ -21,19 +20,27 @@ self.addEventListener('install', function(event) {
   );
 });
 
+
 self.addEventListener('fetch', function(event) {
   event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return the response from the cached version
-        if (response) {
-          return response;
-        }
+    caches.match(event.request).then(function(response) {
+      return response || fetch(event.request);
+    })
+  );
+});
 
-        // Not in cache - return the result from the live server
-        // `fetch` is essentially a "fallback"
-        return fetch(event.request);
-      }
-    )
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function(cacheName) {
+          // Return true if you want to remove this cache,
+          // but remember that caches are shared across
+          // the whole origin
+        }).map(function(cacheName) {
+          return caches.delete(cacheName);
+        })
+      );
+    })
   );
 });
