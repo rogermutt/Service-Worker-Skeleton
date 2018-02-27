@@ -2,6 +2,8 @@ var CACHE_NAME = 'dependencies-cache';
 
 var REQUIRED_FILES = [
   "index.html",
+  "main.js",
+  "sw.js",
   "one.jpeg",
   "two.jpeg"
 ];
