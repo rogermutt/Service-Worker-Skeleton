@@ -10,7 +10,13 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-
 let one = document.getElementById("one");
 
-one.innerHTML = navigator.onLine ? "You are online" : "You are offline";
+if (!navigator.onLine) {
+
+  let imgOffline = document.createElement('img');
+  imgOffline.src = "offline.jpg"
+  one.append(imgOffline);
+}
+
+one.innerHTML = "You are online";

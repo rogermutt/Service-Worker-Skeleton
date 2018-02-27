@@ -4,8 +4,7 @@ var REQUIRED_FILES = [
   "/",
   "main.js",
   "sw.js",
-  "one.jpeg",
-  "two.jpeg"
+  "offline.jpg"
 ];
 
 self.addEventListener('install', function(event) {
