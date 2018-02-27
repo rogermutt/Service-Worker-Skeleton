@@ -12,7 +12,5 @@ if ('serviceWorker' in navigator) {
 
 
 let one = document.getElementById("one");
-let two = document.getElementById("two");
 
-one.src = "one.jpeg";
-two.src = "two.jpeg";
+one.innerHTML = navigator.onLine ? "You are online" : "You are offline";
