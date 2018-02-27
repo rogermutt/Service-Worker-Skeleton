@@ -4,6 +4,7 @@ var REQUIRED_FILES = [
   "/",
   "main.js",
   "sw.js",
+  "offline.html",
   "offline.jpg"
 ];
 

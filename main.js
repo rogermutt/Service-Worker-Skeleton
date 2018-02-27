@@ -13,7 +13,7 @@ if ('serviceWorker' in navigator) {
 let one = document.getElementById("one");
 
 if (!navigator.onLine) {
-
+console.log("offline");
   let imgOffline = document.createElement('img');
   imgOffline.src = "offline.jpg"
   one.append(imgOffline);
