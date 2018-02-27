@@ -1,8 +1,9 @@
 var CACHE_NAME = 'dependencies-cache';
 
 var REQUIRED_FILES = [
-  'one.jpeg',
-  'two.jpeg'
+  "index.html",
+  "one.jpeg",
+  "two.jpeg"
 ];
 
 self.addEventListener('install', function(event) {
