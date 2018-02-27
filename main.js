@@ -10,6 +10,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+
 let one = document.getElementById("one");
 let two = document.getElementById("two");
 
