@@ -10,13 +10,12 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-let one = document.getElementById("one");
+let container = document.getElementById("container");
 
-if (!navigator.onLine) {
-console.log("offline");
-  let imgOffline = document.createElement('img');
-  imgOffline.src = "offline.jpg"
-  one.append(imgOffline);
-}
+let h2 = document.createElement("h2");
+h2.innerHTML = "I am online";
 
-one.innerHTML = "You are online";
+let p = document.createElement("p");
+p.innerHTML = "I just love when my network is up and running :p";
+
+[h2,p].map(el=>container.append(el));

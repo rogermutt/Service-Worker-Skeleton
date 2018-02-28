@@ -1,34 +1,16 @@
 
 @import url(https://fonts.googleapis.com/css?family=Lato);
 
-body {
-    margin: 0;
-    font-family: Lato;
+.offLine_Container {
+  background: black;
+  color: white;
+  padding: 5px;
+  text-align: center;
 }
 
-.video-container {
-  position: relative;
+.onLine_Container {
+  background: white;
+  color: black;
+  padding: 5px;
+  text-align: center;
 }
-
-#backgroundVid {
-	position: fixed;
-	min-width: 100%; 
-    min-height: 100%;
-}
-
-.content {
-    position: fixed;
-    //bottom: 0;
-    color: #f1f1f1;
-    width: 100%;
-    padding: 2.5%;
-}
-
-#footer {
-	position: fixed;
-	font-size: 12px;
-	bottom: 15px;
-}
-
-
-
