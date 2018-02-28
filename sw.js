@@ -5,19 +5,17 @@ var REQUIRED_FILES = [
   "main.js",
   "sw.js",
   "offline.html",
+  "style.css",
   "offline.jpg"
 ];
 
 self.addEventListener('install', function(event) {
-  // Perform install step:  loading each required file into cache
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(function(cache) {
-        // Add all offline dependencies to the cache
+      .then((cache)=> {
         return cache.addAll(REQUIRED_FILES);
       })
-      .then(function() {
-      	// At this point everything has been cached
+      .then(()=>{
         return self.skipWaiting();
       })
   );
@@ -37,9 +35,6 @@ self.addEventListener('activate', function(event) {
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.filter(function(cacheName) {
-          // Return true if you want to remove this cache,
-          // but remember that caches are shared across
-          // the whole origin
         }).map(function(cacheName) {
           return caches.delete(cacheName);
         })
