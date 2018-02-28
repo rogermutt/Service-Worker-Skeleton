@@ -18,6 +18,18 @@
 
   <script src="main.js"></script>
 
+  <script type="text/javascript">
+
+   if(!navigator.onLine) {
+    window.location.href = 'offline.html'
+   }
+
+   window.addEventListener("offline", function() {
+    window.location.href = 'offline.html'
+   }, false);
+
+</script>
+
   <!--
 
   <div class="video-container">
