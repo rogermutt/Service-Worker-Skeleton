@@ -10,12 +10,9 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-let container = document.getElementById("container");
 
-let h2 = document.createElement("h2");
-h2.innerHTML = "I am online";
+let styleChanger = document.querySelector("#styleChanger");
 
-let p = document.createElement("p");
-p.innerHTML = "I just love when my network is up and running :p";
-
-[h2,p].map(el=>container.append(el));
+styleChanger.addEventListener("click", ()=>{
+  window.location.assign("/colorful.html");
+});
