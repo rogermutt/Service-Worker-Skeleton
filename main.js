@@ -14,5 +14,5 @@ if ('serviceWorker' in navigator) {
 let styleChanger = document.querySelector("#styleChanger");
 
 styleChanger.addEventListener("click", ()=>{
-  window.location.assign("/colorful.html");
+  window.location.href = 'colorful.html'
 });
